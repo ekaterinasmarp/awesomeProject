@@ -12,12 +12,29 @@ type GrainProvider interface {
 	getSomeGrains()
 }
 
-type GrainProviders interface {
-	getSomeGrains()
+type TransportCompany interface {
+	orderDelivery()
+}
+
+type TransportCompanyS struct {
+	creditCardNumber string
+}
+
+func (transportCompany TransportCompanyS) orderDelivery() {
+	println("Withdraw from " + transportCompany.creditCardNumber)
+}
+
+type GrainProviderS struct {
+	transportCompany TransportCompany
 }
 
 func (provider GrassProviderS) getSomeGrass() {
-	println("Grain Provider returns some grains")
+	println("Grass Provider ships some grass")
+}
+
+func (provider GrainProviderS) getSomeGrains() {
+	provider.transportCompany.orderDelivery()
+	println("Grain Provider ships some grains")
 }
 
 type FoodStation interface {
